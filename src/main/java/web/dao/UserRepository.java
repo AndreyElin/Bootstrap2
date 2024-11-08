@@ -7,5 +7,5 @@ import web.models.User;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
 
-    User findUserByUserName(String userName);
+    User findByEmail(String email);
 }

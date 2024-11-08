@@ -23,7 +23,7 @@ public class AdminController {
 
     @GetMapping("/admin")
     public String getAllUsers(Model model, Principal principal) {
-        User user = userService.getUserByUserName(principal.getName());
+        User user = userService.getUserByEmail(principal.getName());
         model.addAttribute("user", user);
         model.addAttribute("helloUser", principal.getName());
         model.addAttribute("allUsers", userService.getAllUsers());
@@ -44,8 +44,8 @@ public class AdminController {
         return "redirect:/admin";
     }
 
-    @PostMapping(value = "/admin/{id}")
-    public String deleteUser(@PathVariable("id") long id) {
+    @PostMapping(value = "/admin/delete")
+    public String deleteUser(@RequestParam("id") long id) {
         userService.delete(id);
         return "redirect:/admin";
     }

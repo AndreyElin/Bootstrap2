@@ -18,7 +18,6 @@ public class User implements UserDetails {
     private String lastName;
     private byte age;
     private String email;
-    private String userName;
     private String password;
 
     @ManyToMany(fetch = FetchType.LAZY)
@@ -29,22 +28,20 @@ public class User implements UserDetails {
 
     }
 
-    public User(Long id, String name, String lastName, byte age, String email, String userName, String password) {
+    public User(Long id, String name, String lastName, byte age, String email, String password) {
         this.id = id;
         this.name = name;
         this.lastName = lastName;
         this.age = age;
         this.email = email;
-        this.userName = userName;
         this.password = password;
     }
 
-    public User(String name, String lastName, byte age, String email, String userName, String password, Set<Role> roleSet) {
+    public User(String name, String lastName, byte age, String email, String password, Set<Role> roleSet) {
         this.name = name;
         this.lastName = lastName;
         this.age = age;
         this.email = email;
-        this.userName = userName;
         this.password = password;
         this.roleSet = roleSet;
     }
@@ -89,14 +86,6 @@ public class User implements UserDetails {
         this.email = email;
     }
 
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
     public void setPassword(String password) {
         this.password = password;
     }
@@ -122,7 +111,7 @@ public class User implements UserDetails {
 
     @Override
     public String getUsername() {
-        return userName;
+        return email;
     }
 
     @Override
