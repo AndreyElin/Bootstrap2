@@ -1,8 +1,8 @@
 package web.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import web.dao.RoleRepository;
 import web.models.Role;
 
@@ -25,6 +25,15 @@ public class RoleServiceImpl implements RoleService {
     @Override
     public List<Role> getRoles() {
         return roleRepository.findAll();
+    }
+
+    @Override
+    public Role getByName(String name) throws ChangeSetPersister.NotFoundException {
+        Role role = roleRepository.findByName(name);
+        if (role == null) {
+            throw new ChangeSetPersister.NotFoundException();
+        }
+        return role;
     }
 
 }

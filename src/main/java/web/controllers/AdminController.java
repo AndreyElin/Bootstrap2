@@ -1,14 +1,19 @@
 package web.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import web.models.Role;
 import web.models.User;
 import web.services.RoleService;
 import web.services.UserService;
 
 import java.security.Principal;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Controller
 public class AdminController {
@@ -21,6 +26,11 @@ public class AdminController {
         this.roleService = roleService;
     }
 
+    @GetMapping("/login")
+    public String login() {
+        return "login";
+    }
+
     @GetMapping("/admin")
     public String getAllUsers(Model model, Principal principal) {
         User user = userService.getUserByEmail(principal.getName());
@@ -28,12 +38,12 @@ public class AdminController {
         model.addAttribute("helloUser", principal.getName());
         model.addAttribute("allUsers", userService.getAllUsers());
         model.addAttribute("newUser", new User());
-        model.addAttribute("role",roleService.getRoles());
+        model.addAttribute("role", roleService.getRoles());
         return "admin/adminPanel";
     }
 
-    @PostMapping(value = "admin/update")
-    public String updateUser(@ModelAttribute("user") User user) {
+    @PostMapping(value = "admin/update/{id}")
+    public String updateUser(@ModelAttribute User user) {
         userService.update(user);
         return "redirect:/admin";
     }
